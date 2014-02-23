@@ -18,3 +18,10 @@
 .settings
 cobertura.ser
 .checkstyle
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
