@@ -1,7 +1,6 @@
 <ivy-module version="2.0">
-  <info organisation="com.jcm" module="textlineprocessor" revision="1.0">
-    <ivyauthor name="Zhong Lizhi" url="mailto:zhonglizhi@8chedao.com" />
-    <ivyauthor name="Xu Huiyao" url="mailto:xuhuiyao@8chedao.com" />
+  <info organisation="com.ztools" module="textlineprocessor" revision="1.0">
+    <ivyauthor name="Bliss Chung" url="mailto:bliss@3zso.com" />
     <description>
       Describes the current module. This tag is the only one which can contain
       free text, including html. It is used to describe the module itself,

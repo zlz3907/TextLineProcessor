@@ -51,18 +51,28 @@ public final class TLPer {
    * @return a <code>byte[]</code> value
    */
   public byte[] read(final InputStream in, Object... outObjs) {
+    BufferedReader br = new BufferedReader(new InputStreamReader(in));
+    //br.readLine();
     return null;
   }
 
+
   /**
-   * @see read(final InputStream in, Object... outObjs)
+   * Describe <code>read</code> method here.
+   *
+   * @param in an <code>InputStream</code> value
+   * @return a <code>byte[]</code> value
    */
   public byte[] read(final InputStream in) {
     return read(in, new Object[] {});
   }
 
   /**
-   * @see read(final InputStream in, Object... outObjs)
+   * Describe <code>read</code> method here.
+   *
+   * @param file a <code>File</code> value
+   * @return a <code>byte[]</code> value
+   * @exception FileNotFoundException if an error occurs
    */
   public byte[] read(final File file) throws FileNotFoundException {
     if (null != file && file.exists()) {
@@ -73,7 +83,11 @@ public final class TLPer {
   }
 
   /**
-   * @see read(final InputStream in, Object... outObjs)
+   * Describe <code>read</code> method here.
+   *
+   * @param path a <code>String</code> value
+   * @return a <code>byte[]</code> value
+   * @exception FileNotFoundException if an error occurs
    */
   public byte[] read(final String path) throws FileNotFoundException {
     if (null != path && !path.isEmpty()) {
