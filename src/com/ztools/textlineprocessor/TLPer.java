@@ -4,15 +4,18 @@ import java.io.FileInputStream;
 import java.io.File;
 import java.io.InputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStreamReader;
+import java.io.BufferedReader;
 
 /**
- * <code>TLPer</code>(Text Line Processor)是文本行处理程序的入口.
+ * <code>TLPer</code> Text Line Processor.
+ * 是文本行处理程序的入口.
  *
  * <p>
  * 在各种项目过程中，我们经常需要读取一些文本，并进行处理，不同的需求
  * 只是处理的逻辑不一样而已。一般情况下，Java对读取文件的操作流程也是
  * 一样的（打开文件、处理文件和关闭文件）。在这个过程中，我们将处理过
- * 程独立出来，通过Java类反射的机制将处理逻辑注入。
+ * 程独立出来，通过Java类反射的机制将处理逻辑注入.
  * </p>
  *
  * @author <a href="mailto:zlz.3907@gmail.com">Zhong Lizhi</a>
@@ -48,35 +51,77 @@ public final class TLPer {
    *
    * @param in an <code>InputStream</code> value
    * @param outObjs an <code>Object</code> value
-   * @return a <code>byte[]</code> value
    */
-  public byte[] read(final InputStream in, Object... outObjs) {
-    BufferedReader br = new BufferedReader(new InputStreamReader(in));
-    //br.readLine();
-    return null;
-  }
+  public void read(final InputStream in, Object... outObjs) {
 
+    if (null == in) {
+      throw new NullPointerException("input stream is null");
+    }
+
+    if (null == lineProcessors) {
+      throw new NullPointerException("aLineProcessors is null");
+    }
+    BufferedReader br = null;
+    try {
+      br = new BufferedReader(new InputStreamReader(in, "utf-8"));
+      //br.readLine();
+      String line = null;
+
+      for (int i = 0; i < lineProcessors.length; i++) {
+        lineProcessors[i].beforeRead();
+      }
+
+      while (null != (line = br.readLine())) {
+        for (int i = 0; i < lineProcessors.length; i++) {
+          lineProcessors[i].process(line, outObjs);
+        }
+      }
+
+      for (int i = 0; i < lineProcessors.length; i++) {
+        lineProcessors[i].afterRead();
+      }
+
+    } catch (Exception e) {
+      e.printStackTrace();
+    } finally {
+
+      if (null != in) {
+        try {
+          in.close();
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
+      }
+
+      if (null != br) {
+        try {
+          br.close();
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
+      }
+    }
+  }
 
   /**
    * Describe <code>read</code> method here.
    *
    * @param in an <code>InputStream</code> value
-   * @return a <code>byte[]</code> value
    */
-  public byte[] read(final InputStream in) {
-    return read(in, new Object[] {});
+  public void read(final InputStream in) {
+    read(in, new Object[] {});
   }
 
   /**
    * Describe <code>read</code> method here.
    *
    * @param file a <code>File</code> value
-   * @return a <code>byte[]</code> value
    * @exception FileNotFoundException if an error occurs
    */
-  public byte[] read(final File file) throws FileNotFoundException {
+  public void read(final File file) throws FileNotFoundException {
     if (null != file && file.exists()) {
-      return read(new FileInputStream(file));
+      read(new FileInputStream(file));
+      return;
     }
 
     throw new FileNotFoundException("File not found:" + file);
@@ -86,12 +131,12 @@ public final class TLPer {
    * Describe <code>read</code> method here.
    *
    * @param path a <code>String</code> value
-   * @return a <code>byte[]</code> value
    * @exception FileNotFoundException if an error occurs
    */
-  public byte[] read(final String path) throws FileNotFoundException {
+  public void read(final String path) throws FileNotFoundException {
     if (null != path && !path.isEmpty()) {
-      return read(new File(path));
+      read(new File(path));
+      return;
     }
 
     throw new FileNotFoundException("File not found: " + path);
