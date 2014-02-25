@@ -1,7 +1,6 @@
 package t.ztools.textlineprocessor;
 
 import org.junit.Test;
-import com.ztools.textlineprocessor.TLPer;
 
 public class TLPerTest {
 
