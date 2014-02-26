@@ -1,18 +1,20 @@
 package com.ztools.textlineprocessor.def;
 
-import java.io.FileWriter;
 import com.ztools.textlineprocessor.ILineProcessor;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
 
 public class EnglishTest implements ILineProcessor {
 
   private StringBuilder sbd = new StringBuilder();
-  private FileWriter fw = null;
+  private OutputStreamWriter fw = null;
   private String cacheQuestion = null;
 
   public void beforeRead() {
     System.out.println(this.getClass().getSimpleName() + ": Begin...");
     try {
-      fw = new FileWriter("english-test.txt");
+      fw = new OutputStreamWriter(new FileOutputStream("english-test.txt"),
+                                  "utf-8");
     } catch (Exception e) {
       e.printStackTrace();
     }

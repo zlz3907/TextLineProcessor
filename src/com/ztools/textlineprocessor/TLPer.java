@@ -46,13 +46,19 @@ public final class TLPer {
     this.lineProcessors = aLineProcessors;
   }
 
+  public void read(final InputStream in, Object... outObjs) {
+    read(in, "utf-8", outObjs);
+  }
+
   /**
    * 读取一个文件.
    *
    * @param in an <code>InputStream</code> value
+   * @param encoding a <code>String</code> value
    * @param outObjs an <code>Object</code> value
    */
-  public void read(final InputStream in, Object... outObjs) {
+  public void read(final InputStream in, final String encoding,
+                   Object... outObjs) {
 
     if (null == in) {
       throw new NullPointerException("input stream is null");
@@ -63,7 +69,7 @@ public final class TLPer {
     }
     BufferedReader br = null;
     try {
-      br = new BufferedReader(new InputStreamReader(in, "utf-8"));
+      br = new BufferedReader(new InputStreamReader(in, encoding));
       //br.readLine();
       String line = null;
 
