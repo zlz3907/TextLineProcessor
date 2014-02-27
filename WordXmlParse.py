@@ -69,7 +69,7 @@ def process(path):
         arow_trans = " ".join(str_trans);
     arow = str_arow + arow_trans + "]]></trans><phonetic><![CDATA[" + phonetic_symbol + "]]></phonetic><tags></tags><progress>0</progress></item>\n";
     str_list.append(arow);
-    print arow;
+    print queryword + "\t" + phonetic_symbol + "\t" + arow_trans;
     xmlfile.close();
 
 def main(argv):
