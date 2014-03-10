@@ -35,8 +35,9 @@ public class EnglishExamination implements ILineProcessor {
       return true;
     }
     if (null != filters && 0 < filters.length) {
+      String fixLine = line.trim();
       for (String prefixWord : filters) {
-        if (line.startsWith(prefixWord)) {
+        if (fixLine.startsWith(prefixWord)) {
           return true;
         }
       }
@@ -52,7 +53,7 @@ public class EnglishExamination implements ILineProcessor {
     } catch (Exception e) {
       e.printStackTrace();
     }
-    style = "#+BEGIN_HTML" +
+    style = "#+BEGIN_HTML\n" +
       "<link rel=\"stylesheet\" title=\"Standard\" \n"
       + "href=\"http://blog.3zso.com/css/worg.css\" type=\"text/css\" />\n"
       + "<style>\n"
