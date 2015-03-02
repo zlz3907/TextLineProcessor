@@ -1,4 +1,4 @@
-;;; prj.el --- TextLineProcessor project
+;;; prj.el --- Project Configuration
 
 ;;; Commentary:
 ;; JDEE Project
@@ -6,52 +6,50 @@
 ;; Version: 1.0
 
 ;;; Code:
+(defvar prj-ant-buildfile "build.xml"
+  "Specify a build file name.")
+(defvar prj-working-directory
+  (file-name-directory (jde-find-project-file (file-truename ".")))
+  "Specify working directory.")
+(defvar prj-ant-buildfile-abspath (concat prj-working-directory
+                                          prj-ant-buildfile)
+  "Abslute path of build file.")
+(defvar prj-customize-name ""
+  "Specify the project name, by default is current directory name.")
+(defvar prj-name
+  (if (eq "" prj-customize-name)
+      (file-name-base prj-working-directory))
+  "Specify the project name.")
+(defvar prj-sourcepath
+  (quote ((concat prj-working-directory "src")
+          (concat prj-working-directory "test/unit")
+          (concat prj-working-directory "test/verify")
+          (concat prj-working-directory "test/integration")))
+  "Specify source path.")
+(defvar prj-classpath
+  (quote ((concat prj-working-directory "lib")
+          (concat prj-working-directory "build/main")
+          (concat prj-working-directory "build/test")))
+  "Specify classpath.")
+
 (jde-project-file-version "1.0")
-(defvar project-base "~/projects/textlineprocessor" "The project base path.")
 (jde-set-variables
- '(jde-project-name "textlineprocessor")
- ;; 运行时使用
- '(jde-run-option-classpath
-   (quote
-    ("~/projects/textlineprocessor/lib/*"
-     "~/projects/textlineprocessor/build/main"
-     "~/projects/textlineprocessor/build/test"
-     )))
- ;; 调试时使用
- '(jde-db-option-classpath
-   (quote
-    ("~/projects/textlineprocessor/lib/*"
-     "~/projects/textlineprocessor/build/main"
-     "~/projects/textlineprocessor/build/test"
-     )))
- ;; 在编译时用到
- '(jde-compile-option-sourcepath
-   (quote ("~/projects/textlineprocessor/src"
-           "~/projects/textlineprocessor/test/unit"
-           "~/projects/textlineprocessor/test/verify"
-           "~/projects/textlineprocessor/test/integration")))
- '(jde-compile-option-classpath
-   (quote ("~/projects/textlineprocessor/lib/*"
-           "~/projects/textlineprocessor/build/main"
-           "~/projects/textlineprocessor/build/test"
-           )))
- ;; Junit
- '(jde-junit-working-directory "~/projects/textlineprocessor/")
- '(jde-run-working-directory "~/projects/textlineprocessor/")
- ;; '(jde-sourcepath
- ;;   (quote ("~/projects/textlineprocessor/src/"
- ;;           "~/projects/textlineprocessor/test/unit"
- ;;           "~/projects/textlineprocessor/test/verify"
- ;;           "~/projects/textlineprocessor/test/integration")))
- ;;'(jde-run-application-class "~/projects/textlineprocessor/bin")
- ;;'(jde-run-working-directory "e:/home/lizhi/workspace/2012/ztools")
- '(jde-compile-option-directory "~/projects/textlineprocessor/build/main/")
- '(jde-compile-option-encoding "utf-8")
- '(jde-build-function (quote (jde-ant-build)))
- '(jde-ant-enable-find t)
+ ;; global
+ '(jde-project-name prj-name)
+ '(jde-run-working-directory prj-working-directory)
+ ;;'(jde-junit-working-directory prj-working-directory)
+ '(jde-ant-working-directory prj-working-directory)
+ ;; '(jde-compile-option-encoding "utf-8")
  '(jde-ant-read-target t)
- '(jde-ant-home "~/apache/ant")
- '(jde-ant-invocation-method (quote ("Ant Server")))
- )
+ '(jde-ant-enable-find t)
+ ;;'(jde-ant-buildfile prj-ant-buildfile-abspath)
+ '(jde-build-function 'prj-build)
+ ;; classpath
+ '(jde-global-classpath prj-classpath)
+ '(jde-compile-option-sourcepath prj-sourcepath)
+ '(jde-compile-option-classpath prj-classpath)
+ ;;'(jde-compile-option-directory "build/main")
+ '(Jde-sourcepath prj-sourcepath)
+ '(jde-ant-build-classpath prj-classpath))
 
 ;;; prj.el ends here
