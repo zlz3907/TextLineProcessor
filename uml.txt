@@ -1,0 +1,76 @@
+@startuml
+
+' definitions
+' -----------
+
+' package "com.ztools.textlineprocessor"
+interface ILineProcessor
+class Main
+class TLPer
+' end package
+
+' package "com.ztools.textlineprocessor.def"
+class Plantuml
+class PrintLine
+class GroupMediaFile
+class WordSplit
+class EnglishExamination
+class EnglishTest
+' end package
+
+' content
+' -------
+
+' TLPer:
+TLPer --> "*" ILineProcessor
+TLPer : void read(InputStream, Object)
+TLPer : void read(InputStream, String, Object)
+TLPer : void read(InputStream)
+TLPer : void read(File)
+TLPer : void read(String)
+
+' EnglishTest:
+ILineProcessor <|.. EnglishTest
+EnglishTest : void beforeRead()
+EnglishTest : void process(String, Object)
+EnglishTest : void afterRead()
+
+' Plantuml:
+ILineProcessor <|.. Plantuml
+Plantuml : void beforeRead()
+Plantuml : void process(String, Object)
+Plantuml : void afterRead()
+
+' WordSplit:
+ILineProcessor <|.. WordSplit
+WordSplit : void beforeRead()
+WordSplit : void process(String, Object)
+WordSplit : void afterRead()
+
+' GroupMediaFile:
+ILineProcessor <|.. GroupMediaFile
+GroupMediaFile : void beforeRead()
+GroupMediaFile : void process(String, Object)
+GroupMediaFile : void afterRead()
+
+' Main:
+Main : void main(String)
+
+' PrintLine:
+ILineProcessor <|.. PrintLine
+PrintLine : void process(String, Object)
+PrintLine : void beforeRead()
+PrintLine : void afterRead()
+
+' ILineProcessor:
+ILineProcessor : void process(String, Object)
+ILineProcessor : void beforeRead()
+ILineProcessor : void afterRead()
+
+' EnglishExamination:
+ILineProcessor <|.. EnglishExamination
+EnglishExamination : void beforeRead()
+EnglishExamination : void process(String, Object)
+EnglishExamination : void afterRead()
+
+@enduml

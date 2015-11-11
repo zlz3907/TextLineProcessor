@@ -1,4 +1,4 @@
-<project name="textlineprocessor" default="test" basedir=".">
+<project name="textlineprocessor" default="ci.test" basedir=".">
   <description>
     project description
   </description>
